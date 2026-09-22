@@ -196,11 +196,11 @@ public class DTXboxController {
     }
 
     public boolean getLeftBumper() {
-        return this.controller.getLeftBumper();
+        return this.controller.getLeftBumperButton();
     }
 
     public boolean getRightBumper() {
-        return this.controller.getRightBumper();
+        return this.controller.getRightBumperButton();
     }
 
     public boolean getAButtonPressed() {
@@ -236,11 +236,11 @@ public class DTXboxController {
     }
 
     public boolean getLeftBumperPressed() {
-        return this.controller.getLeftBumperPressed();
+        return this.controller.getLeftBumperButtonPressed();
     }
 
     public boolean getRightBumperPressed() {
-        return this.controller.getRightBumperPressed();
+        return this.controller.getRightBumperButtonPressed();
     }
 
     public boolean getAButtonReleased() {
@@ -276,11 +276,11 @@ public class DTXboxController {
     }
 
     public boolean getLeftBumperReleased() {
-        return this.controller.getLeftBumperReleased();
+        return this.controller.getLeftBumperButtonReleased();
     }
 
     public boolean getRightBumperReleased() {
-        return this.controller.getRightBumperReleased();
+        return this.controller.getRightBumperButtonReleased();
     }
 
     public double getLeftStickX() {
