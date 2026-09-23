@@ -6,7 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.lib.DTXboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FeederCommand;
 import frc.robot.commands.ShooterCommand;
@@ -29,7 +29,7 @@ public class RobotContainer {
 
     private FrisbeeFlinger frisbeeFlinger;
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final DTXboxController controller = new DTXboxController(0);
+    private final CommandXboxController controller = new CommandXboxController(0);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -60,9 +60,9 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        controller.rightTrigger.whileTrue(new ShooterCommand(frisbeeFlinger));
-        controller.rightTrigger.debounce(2)
-                               .and(controller.leftTrigger)
+        controller.rightTrigger().whileTrue(new ShooterCommand(frisbeeFlinger));
+        controller.rightTrigger().debounce(2)
+                               .and(controller.leftTrigger())
                                .whileTrue(new FeederCommand(frisbeeFlinger));
 
     }

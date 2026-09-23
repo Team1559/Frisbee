@@ -1,15 +1,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.lib.DTXboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class DriveCommand extends Command{
-    private DTXboxController controller;
+    private CommandXboxController controller;
     private DriveTrain driveTrain;
 
-    public DriveCommand(DriveTrain driveTrain, DTXboxController controller) {
+    public DriveCommand(DriveTrain driveTrain, CommandXboxController controller) {
         this.controller = controller;
         this.driveTrain = driveTrain;
         addRequirements(driveTrain);
@@ -17,9 +17,9 @@ public class DriveCommand extends Command{
 
     @Override
     public void execute() {
-        double forwardSpeed = controller.getLeftStickYSquared();
-        double rotationSpeed = -controller.getRightStickXSquared();
-        if (!(controller.getRightBumper() && controller.getLeftBumper())) {
+        double forwardSpeed = Math.pow(controller.getLeftY(), 2);
+        double rotationSpeed = -Math.pow(controller.getRightX(), 2);
+        if (!(controller.rightBumper().getAsBoolean() && controller.leftBumper().getAsBoolean())) {
             if (Math.abs(forwardSpeed) > Constants.MAX_KIDDIE_DRIVE_VELOCITY_FORWARDS) {
                 forwardSpeed = Math.copySign(Constants.MAX_KIDDIE_DRIVE_VELOCITY_FORWARDS, forwardSpeed);
             }
