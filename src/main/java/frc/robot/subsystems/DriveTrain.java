@@ -10,10 +10,10 @@ public class DriveTrain extends SubsystemBase{
     private DifferentialDrive driveTrain;
 
     public DriveTrain(int leftID, int rightID) {
-        WPI_TalonSRX leftMotor = new WPI_TalonSRX(leftID);
-        WPI_TalonSRX rightMotor = new WPI_TalonSRX(rightID);
-        rightMotor.setInverted(true);
-        driveTrain = new DifferentialDrive(leftMotor, rightMotor);
+        WPI_TalonSRX leftMotorTalonSRX = new WPI_TalonSRX(leftID);
+        WPI_TalonSRX rightMotorTalonSRX = new WPI_TalonSRX(rightID);
+        rightMotorTalonSRX.setInverted(true);
+        driveTrain = new DifferentialDrive(leftMotorTalonSRX, rightMotorTalonSRX);
     }
 
     public void drive (double forwardSpeed, double rotation) {
