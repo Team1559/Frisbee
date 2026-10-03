@@ -71,4 +71,9 @@ public class SparkFlexIoBase extends LoggableIo<SparkFlexIoBase.SparkFlexIoInput
     public void setPercievedAngle(Angle angle) {
         // Doesn't do anything in Replay Mode
     }
+
+    @Override
+    public Voltage getVoltage() {
+        return Volts.of(getInputs().appliedOutput);
+    }
 }

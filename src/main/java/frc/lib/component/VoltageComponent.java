@@ -6,4 +6,5 @@ import frc.lib.util.NeutralOutput;
 
 public interface VoltageComponent extends LoggableComponent, NeutralOutput {
     void setVoltage(Voltage voltage);
+    Voltage getVoltage();
 }

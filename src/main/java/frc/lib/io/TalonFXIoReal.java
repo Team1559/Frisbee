@@ -52,6 +52,7 @@ public class TalonFXIoReal extends TalonFXIoBase {
         inputs.supplyCurrent = supplyCurrent.getValue();
         inputs.motorTemp = motorTemp.getValue();
         inputs.position = position.getValue();
+        inputs.motorVoltage = motor.getMotorVoltage().getValue();
     }
 
     @Override

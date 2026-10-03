@@ -1,5 +1,10 @@
 package frc.robot.commands;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RPM;
+
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
@@ -8,10 +13,15 @@ import frc.robot.subsystems.DriveTrain;
 public class DriveCommand extends Command{
     private CommandXboxController controller;
     private DriveTrain driveTrain;
+    private LinearVelocity maxLinearVelocity;
+    private AngularVelocity maxAngularVelocity;
 
-    public DriveCommand(DriveTrain driveTrain, CommandXboxController controller) {
+    public DriveCommand(DriveTrain driveTrain, CommandXboxController controller, LinearVelocity maxLinearVelocity, AngularVelocity maxAngularVelocity) {
         this.controller = controller;
         this.driveTrain = driveTrain;
+        this.maxLinearVelocity = maxLinearVelocity;
+        this.maxAngularVelocity = maxAngularVelocity;
+
         addRequirements(driveTrain);
     }
 
@@ -29,11 +39,11 @@ public class DriveCommand extends Command{
 
             
         }
-        driveTrain.drive(forwardSpeed, rotationSpeed);
+        driveTrain.drive(maxLinearVelocity.times(forwardSpeed), maxAngularVelocity.times(rotationSpeed));
     }
 
     @Override 
     public void end(boolean isInterrupted) {
-        driveTrain.drive(0, 0);
+        driveTrain.drive(MetersPerSecond.zero(), RPM.zero());
     }
 }

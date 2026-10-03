@@ -29,6 +29,7 @@ public class TalonFXIoBase extends LoggableIo<TalonFXIoBase.TalonFXIoInputs>
         public Temperature motorTemp;
         public AngularVelocity currentVelocity = RPM.zero();
         public Angle position = Angle.ofRelativeUnits(0, Units.Rotations);
+        public Voltage motorVoltage;
     }
 
     public TalonFXIoBase() {
@@ -71,5 +72,10 @@ public class TalonFXIoBase extends LoggableIo<TalonFXIoBase.TalonFXIoInputs>
     @Override
     public AngularVelocity getCurrentVelocity() {
         return getInputs().currentVelocity;
+    }
+
+    @Override
+    public Voltage getVoltage() {
+        return getInputs().motorVoltage;
     }
 }

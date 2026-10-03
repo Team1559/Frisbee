@@ -31,4 +31,9 @@ public class TalonSrxIoBase extends LoggableIo<TalonSrxIoBase.TalonSrxIoInputs>
         logger().debug("Voltage", voltage.in(Volts))
                 .debug("Active", true);
     }
+
+    @Override
+    public Voltage getVoltage() {
+        return getInputs().motorVoltage;
+    }
 }

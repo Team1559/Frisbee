@@ -1,33 +1,43 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.Volts;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
+import frc.lib.component.AngularVelocityComponent;
+import frc.lib.intermediate.AngularVelocityToVoltageAdapter;
+import frc.lib.io.TalonSrxIoReal;
+import frc.lib.logging.LoggableSubsystem;
 
-public class FrisbeeFlinger extends SubsystemBase {
-    private WPI_TalonSRX feederMotor;
-    private WPI_TalonSRX shooterMotor;
+public class FrisbeeFlinger extends LoggableSubsystem {
+    private static final int FLYWHEEL_ID = 6;
+    private final AngularVelocityComponent flywheel;
 
-    public FrisbeeFlinger(int feederID, int shooterID){
-        feederMotor = new WPI_TalonSRX(feederID);
-        shooterMotor = new WPI_TalonSRX(shooterID);
-    }
+    public static final AngularVelocity FLYWHEEL_MAX_ANGULAR_VELOCITY = RPM.of(5000);
+    public static final Voltage FLYWHEEL_MAX_VOLTAGE = Volts.of(12);
 
-    public void spinShooter(double speed){
-        shooterMotor.set(TalonSRXControlMode.PercentOutput, speed);
-    }
-    
-    public void stopShooter(){
-        shooterMotor.set(TalonSRXControlMode.PercentOutput, 0);
-    }
-    
-    public void spinFeeder(){
-        feederMotor.set(TalonSRXControlMode.PercentOutput,Constants.FEEDER_SPEED); 
+    public FrisbeeFlinger() {
+        super("FrisbeeFlinger");
+        flywheel = createFlywheel();
+        addChild("Flywheel", flywheel);
     }
 
-    public void stopFeeder(){
-        feederMotor.set(TalonSRXControlMode.PercentOutput,0);
+    public void spinShooter(AngularVelocity flywheelVelocity) {
+        flywheel.setVelocity(flywheelVelocity);
     }
+
+    public void stopShooter() {
+        flywheel.setVelocity(RadiansPerSecond.zero());
+    }
+
+    private static AngularVelocityComponent createFlywheel() {
+        WPI_TalonSRX motorTalonSRX = new WPI_TalonSRX(FLYWHEEL_ID);
+        TalonSrxIoReal motor = new TalonSrxIoReal(motorTalonSRX);
+        return new AngularVelocityToVoltageAdapter(motor, FLYWHEEL_MAX_ANGULAR_VELOCITY, FLYWHEEL_MAX_VOLTAGE);
+    }
+
 }
